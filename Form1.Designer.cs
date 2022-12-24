@@ -35,6 +35,7 @@ namespace Particle_system
             this.timer2 = new System.Windows.Forms.Timer(this.components);
             this.label1 = new System.Windows.Forms.Label();
             this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
+            this.button1 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.picDisplay)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             this.SuspendLayout();
@@ -43,7 +44,7 @@ namespace Particle_system
             // 
             this.picDisplay.Location = new System.Drawing.Point(12, 84);
             this.picDisplay.Name = "picDisplay";
-            this.picDisplay.Size = new System.Drawing.Size(1023, 487);
+            this.picDisplay.Size = new System.Drawing.Size(1023, 670);
             this.picDisplay.TabIndex = 0;
             this.picDisplay.TabStop = false;
             // 
@@ -51,20 +52,20 @@ namespace Particle_system
             // 
             this.timer1.Enabled = true;
             this.timer1.Interval = 40;
-            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            this.timer1.Tick += new System.EventHandler(this.Timer1_Tick);
             // 
             // timer2
             // 
             this.timer2.Enabled = true;
             this.timer2.Interval = 40;
             this.timer2.Tag = "timer2";
-            this.timer2.Tick += new System.EventHandler(this.timer2_Tick);
+            this.timer2.Tick += new System.EventHandler(this.Timer2_Tick);
             // 
             // label1
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Segoe UI", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label1.Location = new System.Drawing.Point(12, 24);
+            this.label1.Location = new System.Drawing.Point(4, 19);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(330, 45);
             this.label1.TabIndex = 1;
@@ -73,7 +74,7 @@ namespace Particle_system
             // numericUpDown1
             // 
             this.numericUpDown1.Font = new System.Drawing.Font("Segoe UI", 16F, System.Drawing.FontStyle.Bold);
-            this.numericUpDown1.Location = new System.Drawing.Point(348, 24);
+            this.numericUpDown1.Location = new System.Drawing.Point(348, 19);
             this.numericUpDown1.Maximum = new decimal(new int[] {
             1000,
             0,
@@ -89,13 +90,25 @@ namespace Particle_system
             0,
             0,
             0});
-            this.numericUpDown1.ValueChanged += new System.EventHandler(this.numericUpDown1_ValueChanged);
+            this.numericUpDown1.ValueChanged += new System.EventHandler(this.NumericUpDown1_ValueChanged);
+            // 
+            // button1
+            // 
+            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button1.Font = new System.Drawing.Font("Segoe UI", 16F, System.Drawing.FontStyle.Bold);
+            this.button1.Location = new System.Drawing.Point(534, 12);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(501, 66);
+            this.button1.TabIndex = 3;
+            this.button1.Text = "Поменять цвета колец";
+            this.button1.UseVisualStyleBackColor = true;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1047, 583);
+            this.ClientSize = new System.Drawing.Size(1047, 766);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.numericUpDown1);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.picDisplay);
@@ -115,6 +128,7 @@ namespace Particle_system
         public System.Windows.Forms.Timer timer2;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.NumericUpDown numericUpDown1;
+        private System.Windows.Forms.Button button1;
     }
 }
 
