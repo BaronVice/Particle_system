@@ -19,8 +19,10 @@ namespace Particle_system.MyObjects
         public float Life;
 
         public static Random random = new Random();
-    
-        
+        public static List<Particle> particles = new List<Particle>();
+        private static List<Particle> toRemove = new List<Particle>();
+        public static int amount = 500;
+
         public Particle()
         {
             Direction = random.Next(360);
@@ -42,10 +44,13 @@ namespace Particle_system.MyObjects
 
             brush.Dispose();
         }
-
-        public static void generateParticles(int amount, List<Particle> particles, PictureBox display)
+        
+        public static void addParticles(PictureBox display)
         {
-            for (int i = 0; i < amount; i++)
+            int amountToAdd = random.Next(10);
+            amountToAdd = Math.Min(amountToAdd, amount - amountToAdd);
+
+            for (int i = 0; i < amountToAdd; i++)
             {
                 Particle particle = new Particle();
                 particle.X = display.Image.Width / 2;
@@ -63,7 +68,7 @@ namespace Particle_system.MyObjects
         //    particle.Y = -15;
         //}
 
-        private static void resetParticle(Particle particle, PictureBox display)
+        private static void resetValues(Particle particle, PictureBox display)
         {
             particle.Life = 20 + random.Next(100);
             particle.X = display.Image.Width / 2;
@@ -74,15 +79,25 @@ namespace Particle_system.MyObjects
             particle.Radius = random.Next(10);
         }
 
+        private static void resetParticle(Particle particle, PictureBox display)
+        {
+            if (amount < particles.Count - toRemove.Count)
+                toRemove.Add(particle);
+
+            else
+                resetValues(particle, display);
+        }
+
         private static void moveParticle(Particle particle)
         {
-            var directionInRadians = particle.Direction / 180 * Math.PI;
+            double directionInRadians = particle.Direction / 180 * Math.PI;
             particle.X += (float)(particle.Speed * Math.Cos(directionInRadians));
             particle.Y += (float)(particle.Speed * Math.Sin(directionInRadians));
         }
 
-        public static void updateState(List<Particle> particles, PictureBox display)
+        public static void updateState(PictureBox display)
         {
+
             foreach (Particle particle in particles)
             {
                 particle.Life -= 1;
@@ -92,18 +107,23 @@ namespace Particle_system.MyObjects
                 else
                     moveParticle(particle);
             }
+
+            foreach (Particle particle in toRemove)
+                particles.Remove(particle);
+
+            toRemove.Clear();
         }
 
-        private static void render(List<Particle> particles, Graphics g)
+        private static void render(Graphics g)
         {
             foreach (Particle particle in particles)
                 particle.draw(g);
         }
 
-        public static void drawParticleList(List<Particle> particles, Graphics g)
+        public static void drawParticleList(Graphics g)
         {
             g.Clear(Color.White);
-            render(particles, g);
+            render(g);
         }
     
     }
