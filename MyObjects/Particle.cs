@@ -16,7 +16,7 @@ namespace Particle_system.MyObjects
 
         public float Direction;
         public float Speed;
-        public int Life;
+        public float Life;
 
         public static Random random = new Random();
     
@@ -31,8 +31,12 @@ namespace Particle_system.MyObjects
 
         public void draw(Graphics g)
         {
-            // Может в дальнейшем сделать цвет статическим?
-            SolidBrush brush = new SolidBrush(Color.Black);
+            // Может в дальнейшем сделать начальный цвет частицы статическим?
+            float k = Math.Min(1f, Life / 100);
+            int alpha = (int)(k * 255);
+
+            Color color = Color.FromArgb(alpha, Color.Black);
+            SolidBrush brush = new SolidBrush(color); 
 
             g.FillEllipse(brush, X - Radius, Y - Radius, Radius * 2, Radius * 2);
 
@@ -51,21 +55,42 @@ namespace Particle_system.MyObjects
             }
         }
 
-        private static void resetParticle(Particle particle)
+        // TODO: снег падает с неба, значит Y = -15, X - задавать рандомно
+        //private static void resetParticle(Particle particle, PictureBox g)
+        //{
+        //    particle.Life = 20 + random.Next(100);
+        //    particle.X = random.Next(g.Image.Width);
+        //    particle.Y = -15;
+        //}
+
+        private static void resetParticle(Particle particle, PictureBox display)
         {
             particle.Life = 20 + random.Next(100);
-            particle.X = // бл
+            particle.X = display.Image.Width / 2;
+            particle.Y = display.Image.Height / 2;
+
+            particle.Direction = random.Next(360);
+            particle.Speed = random.Next(10);
+            particle.Radius = random.Next(10);
         }
 
-        public static void updateState(List<Particle> particles)
+        private static void moveParticle(Particle particle)
+        {
+            var directionInRadians = particle.Direction / 180 * Math.PI;
+            particle.X += (float)(particle.Speed * Math.Cos(directionInRadians));
+            particle.Y += (float)(particle.Speed * Math.Sin(directionInRadians));
+        }
+
+        public static void updateState(List<Particle> particles, PictureBox display)
         {
             foreach (Particle particle in particles)
             {
                 particle.Life -= 1;
-                particle.Life < 0 ? resetParticle(particle) : moveParticle(particle);
-                var directionInRadians = particle.Direction / 180 * Math.PI;
-                particle.X += (float)(particle.Speed * Math.Cos(directionInRadians));
-                particle.Y += (float)(particle.Speed * Math.Sin(directionInRadians));
+
+                if (particle.Life < 0)
+                    resetParticle(particle, display);
+                else
+                    moveParticle(particle);
             }
         }
 

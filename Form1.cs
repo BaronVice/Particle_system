@@ -22,7 +22,9 @@ namespace Particle_system
 
         private void timer1_Tick(object sender, System.EventArgs e)
         {
-            Particle.updateState(particles);
+            // Если хочется сделать старт частиц не взрывом, но постепенным появлением,
+            // то придется каждый тик открывать доступ к следующим частицам (counter или что-то такое)
+            Particle.updateState(particles, picDisplay);
 
             Particle.drawParticleList(particles, Graphics.FromImage(picDisplay.Image));
 
