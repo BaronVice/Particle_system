@@ -8,34 +8,35 @@ namespace Particle_system
 {
     public partial class Form1 : Form
     {
+        Emitter emitter = new Emitter();
 
         public Form1()
         {
             InitializeComponent();
             picDisplay.Image = new Bitmap(picDisplay.Width, picDisplay.Height);
-            Particle.amount = (int)numericUpDown1.Value;
+            emitter.amount = (int)numericUpDown1.Value;
         }
         
         private void Timer1_Tick(object sender, System.EventArgs e)
         {
-            Particle.UpdateState(picDisplay);
+            emitter.UpdateState(picDisplay);
 
-            Particle.DrawParticleList(Graphics.FromImage(picDisplay.Image));
+            emitter.DrawParticleList(Graphics.FromImage(picDisplay.Image));
 
             picDisplay.Invalidate();
         }
 
         private void Timer2_Tick(object sender, EventArgs e)
         {
-            Particle.AddParticles(picDisplay);
+            emitter.AddParticles(picDisplay);
 
-            if (Particle.amount <= Particle.particles.Count)
+            if (emitter.amount <= emitter.particles.Count)
                 timer2.Stop();
         }
 
         private void NumericUpDown1_ValueChanged(object sender, EventArgs e)
         {
-            Particle.amount = (int)numericUpDown1.Value;
+            emitter.amount = (int)numericUpDown1.Value;
             timer2.Start();
         }
     }
