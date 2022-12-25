@@ -14,12 +14,14 @@ namespace Particle_system
         public List<Particle> particles = new List<Particle>();
         private List<Particle> toRemove = new List<Particle>();
 
+        public float gravitationX = 0;
+        public float gravitationY = 1;
+
         public int amount = 500;
         public static Random random = new Random();
 
         public void DrawParticleList(Graphics g)
         {
-            g.Clear(Color.White);
             Render(g);
         }
 
@@ -51,7 +53,7 @@ namespace Particle_system
                 if (particle.Life < 0)
                     ResetParticle(particle, display);
                 else
-                    particle.MoveParticle();
+                    particle.MoveParticle(gravitationX, gravitationY);
             }
 
             foreach (Particle particle in toRemove)

@@ -72,8 +72,11 @@ namespace Particle_system.MyObjects
             Radius = random.Next(10);
         }
 
-        public void MoveParticle()
+        public void MoveParticle(float gX, float gY)
         {
+            SpeedX += gX;
+            SpeedY += gY;
+
             X += SpeedX;
             Y += SpeedY;
         }    
