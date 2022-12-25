@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,21 +12,16 @@ namespace Particle_system.MyObjects
     // сделать метод при нажатии на область появление контекстного меню с возможностью изменить радиус и цвет
 
     // Будет прикольно сделать появление колец там, где было нажато контекстное меню PictureBox'a
-    class Circle
+    class Circle : BaseObject
     {
-        public int Radius;
-        public float X;
-        public float Y;
-        public Color CircleColor;
-
         public static Random random = new Random();
-        public static Pen circuit = new Pen(Color.Black, 1);
+        public static Pen circuit = new Pen(Color.White, 1);
 
         public Circle(int x, int y)
         {
             X = x;
             Y = y;
-            CircleColor = GetRandomColor();
+            ObjColor = GetRandomColor();
             Radius = random.Next(20, 30);
         }
 
@@ -48,12 +44,12 @@ namespace Particle_system.MyObjects
         public static void ChangeColors(List<Circle> circles, Graphics g)
         {
             foreach (Circle circle in circles)
-                circle.CircleColor = GetRandomColor();
+                circle.ObjColor = GetRandomColor();
         }
 
         public void Draw(Graphics g)
         {
-            Pen pen = new Pen(CircleColor, 10);
+            Pen pen = new Pen(ObjColor, 10);
             g.DrawEllipse(pen, X - Radius, Y - Radius, Radius * 2, Radius * 2);
             DrawCircuit(g, Radius - 5);
             DrawCircuit(g, Radius + 5);
@@ -63,6 +59,14 @@ namespace Particle_system.MyObjects
         private void DrawCircuit(Graphics g, int rad)
         {
             g.DrawEllipse(circuit, X - rad, Y - rad, rad * 2, rad * 2);
+        }
+
+        public override GraphicsPath GetGraphicsPath()
+        {
+            var path = base.GetGraphicsPath();
+            int rad = Radius + 10;
+            path.AddEllipse(X - rad, Y - rad, rad * 2, rad * 2);
+            return path;
         }
     }
 }

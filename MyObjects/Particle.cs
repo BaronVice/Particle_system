@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,17 +9,14 @@ using System.Windows.Forms;
 
 namespace Particle_system.MyObjects
 {
-    class Particle
+    class Particle : BaseObject
     {
-        public int Radius;
-        public float X;
-        public float Y;
-
         public float SpeedX;
         public float SpeedY;
         public float Life;
 
         public static Random random = new Random();
+        public static Color baseColor = Color.White;
 
         public Particle()
         {
@@ -42,6 +40,8 @@ namespace Particle_system.MyObjects
 
             Radius = 2 + random.Next(10);
             Life = 20 + random.Next(100);
+
+            ObjColor = baseColor;
         }
 
         public void Draw(Graphics g)
@@ -50,7 +50,7 @@ namespace Particle_system.MyObjects
             float k = Math.Min(1f, Life / 100);
             int alpha = (int)(k * 255);
 
-            Color color = Color.FromArgb(alpha, Color.Black);
+            Color color = Color.FromArgb(alpha, ObjColor);
             SolidBrush brush = new SolidBrush(color); 
 
             g.FillEllipse(brush, X - Radius, Y - Radius, Radius * 2, Radius * 2);
@@ -70,6 +70,7 @@ namespace Particle_system.MyObjects
             SpeedY = (float)(Math.Sin(direction / 180 * Math.PI) * speed);
 
             Radius = random.Next(10);
+
         }
 
         public void MoveParticle(float gX, float gY)
@@ -79,6 +80,13 @@ namespace Particle_system.MyObjects
 
             X += SpeedX;
             Y += SpeedY;
-        }    
+        }
+
+        public override GraphicsPath GetGraphicsPath()
+        {
+            var path = base.GetGraphicsPath();
+            path.AddEllipse(X - Radius, Y - Radius, Radius * 2, Radius * 2);
+            return path;
+        }
     }
 }

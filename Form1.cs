@@ -24,20 +24,39 @@ namespace Particle_system
         
         private void Timer1_Tick(object sender, System.EventArgs e)
         {
-            emitter.UpdateState(picDisplay);
             // Позже (или не нужно)
             //Circle.UpdateState(picDisplay);
 
             // Может отдельным методом?
             Graphics g = Graphics.FromImage(picDisplay.Image);
-           
-            g.Clear(Color.White);
+
+            emitter.UpdateState(picDisplay);
+            CheckOverlaped(g);
+
+            g.Clear(Color.Black);
             Circle.DrawCircleList(g, circles);
             emitter.DrawParticleList(g);
 
             picDisplay.Invalidate();
 
             g.Dispose();
+        }
+
+        private void CheckOverlaped(Graphics g)
+        {
+            foreach (Particle particle in emitter.particles)
+                foreach (Circle circle in circles)
+                {
+                    if (particle.Overlaps(circle, g))
+                    {
+                        particle.ObjColor = circle.ObjColor;
+                        break;
+                    }
+                    else
+                    {
+                        particle.ObjColor = Particle.baseColor;
+                    }
+                }
         }
 
         private void Timer2_Tick(object sender, EventArgs e)
