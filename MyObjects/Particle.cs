@@ -51,7 +51,7 @@ namespace Particle_system.MyObjects
             int alpha = (int)(k * 255);
 
             Color color = Color.FromArgb(alpha, ObjColor);
-            SolidBrush brush = new SolidBrush(color); 
+            SolidBrush brush = new SolidBrush(color);
 
             g.FillEllipse(brush, X - Radius, Y - Radius, Radius * 2, Radius * 2);
 

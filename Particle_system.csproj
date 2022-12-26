@@ -55,6 +55,7 @@
     </Compile>
     <Compile Include="MyObjects\BaseObject.cs" />
     <Compile Include="MyObjects\Circle.cs" />
+    <Compile Include="MyObjects\MousePoint.cs" />
     <Compile Include="MyObjects\Particle.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -70,6 +71,7 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

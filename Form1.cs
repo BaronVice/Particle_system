@@ -9,9 +9,17 @@ namespace Particle_system
     public partial class Form1 : Form
     {
         Emitter emitter = new Emitter();
+        List<Circle> circles = new List<Circle>();
+
         int mouseX, mouseY;
         int menuClickedX, menuClickedY;
-        List<Circle> circles = new List<Circle>();
+        MousePoint mousePoint = new MousePoint();
+
+        bool isDragged = false;
+        Circle draggedCircle;
+
+        int counter = 1;
+        Circle chosenCircle;
 
         public Form1()
         {
@@ -21,7 +29,7 @@ namespace Particle_system
             emitter.gravitationX = (float)gravX.Value;
             emitter.gravitationY = (float)gravY.Value;
         }
-        
+
         private void Timer1_Tick(object sender, System.EventArgs e)
         {
             // Позже (или не нужно)
@@ -85,8 +93,10 @@ namespace Particle_system
 
         private void создатьЗдесьКольцоToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            circles.Add(new Circle(menuClickedX, menuClickedY));
+            if (circles.Count >= 5)
+                circles.RemoveAt(0);
 
+            circles.Add(new Circle(menuClickedX, menuClickedY, $"Circle{counter++}"));
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -94,6 +104,54 @@ namespace Particle_system
             Circle.ChangeColors(circles, Graphics.FromImage(picDisplay.Image));
         }
 
+        private void picDisplay_Click(object sender, EventArgs e)
+        {
+            mousePoint.X = mouseX;
+            mousePoint.Y = mouseY;
+
+            foreach (Circle circle in circles)
+                if (circle.Overlaps(mousePoint, Graphics.FromImage(picDisplay.Image)))
+                {
+                    chosenCircle = circle;
+
+                    circleName.Enabled = true;
+                    circleRadius.Enabled = true;
+
+                    circleName.Text = circle.Name;
+                    circleRadius.Value = circle.Radius;
+
+                    return;
+                }
+                else
+                {
+                    circleName.Enabled = false;
+                    circleRadius.Enabled = false;
+                }
+        }
+
+        private void circleName_TextChanged(object sender, EventArgs e)
+        {
+            chosenCircle.Name = circleName.Text;
+        }
+
+        private void circleRadius_ValueChanged(object sender, EventArgs e)
+        {
+            chosenCircle.Radius = (int)circleRadius.Value;
+        }
+
+        private void picDisplay_DoubleClick(object sender, EventArgs e)
+        {
+
+            foreach (Circle circle in circles)
+                if (circle.Overlaps(mousePoint, Graphics.FromImage(picDisplay.Image)))
+                {
+                    draggedCircle = circle;
+                    isDragged = !isDragged;
+                    return;
+                }
+
+            isDragged = false;
+        }
         private void picDisplayContextMenu_Opening(object sender, System.ComponentModel.CancelEventArgs e)
         {
             menuClickedX = mouseX;
@@ -104,6 +162,12 @@ namespace Particle_system
         {
             mouseX = e.X;
             mouseY = e.Y;
+
+            if (isDragged)
+            {
+                draggedCircle.X = e.X;
+                draggedCircle.Y = e.Y;
+            }
         }
     }
 }

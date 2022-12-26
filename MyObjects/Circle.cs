@@ -14,11 +14,13 @@ namespace Particle_system.MyObjects
     // Будет прикольно сделать появление колец там, где было нажато контекстное меню PictureBox'a
     class Circle : BaseObject
     {
+        public String Name;
         public static Random random = new Random();
         public static Pen circuit = new Pen(Color.White, 1);
 
-        public Circle(int x, int y)
+        public Circle(int x, int y, String name)
         {
+            Name = name;
             X = x;
             Y = y;
             ObjColor = GetRandomColor();
@@ -64,7 +66,7 @@ namespace Particle_system.MyObjects
         public override GraphicsPath GetGraphicsPath()
         {
             var path = base.GetGraphicsPath();
-            int rad = Radius + 10;
+            int rad = Radius * 2;
             path.AddEllipse(X - rad, Y - rad, rad * 2, rad * 2);
             return path;
         }

@@ -11,7 +11,7 @@ namespace Particle_system
 {
     class Emitter
     {
-        public List<Particle> particles = new List<Particle>();
+        public HashSet<Particle> particles = new HashSet<Particle>();
         private List<Particle> toRemove = new List<Particle>();
 
         public float gravitationX = 0;
