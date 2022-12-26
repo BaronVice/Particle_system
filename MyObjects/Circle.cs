@@ -24,7 +24,7 @@ namespace Particle_system.MyObjects
             X = x;
             Y = y;
             ObjColor = GetRandomColor();
-            Radius = random.Next(20, 30);
+            Radius = random.Next(30, 70);
         }
 
         public static void DrawCircleList(Graphics g, List<Circle> circles)

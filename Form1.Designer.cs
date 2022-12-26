@@ -113,7 +113,7 @@ namespace Particle_system
             this.numericUpDown1.Location = new System.Drawing.Point(232, 12);
             this.numericUpDown1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.numericUpDown1.Maximum = new decimal(new int[] {
-            1000,
+            300,
             0,
             0,
             0});
@@ -123,7 +123,7 @@ namespace Particle_system
             this.numericUpDown1.TabIndex = 2;
             this.numericUpDown1.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.numericUpDown1.Value = new decimal(new int[] {
-            500,
+            150,
             0,
             0,
             0});
@@ -266,7 +266,7 @@ namespace Particle_system
             this.circleRadius.TabIndex = 11;
             this.circleRadius.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.circleRadius.Value = new decimal(new int[] {
-            10,
+            50,
             0,
             0,
             0});
@@ -276,7 +276,7 @@ namespace Particle_system
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(699, 593);
+            this.ClientSize = new System.Drawing.Size(698, 598);
             this.Controls.Add(this.circleRadius);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.circleName);
@@ -290,8 +290,8 @@ namespace Particle_system
             this.Controls.Add(this.label1);
             this.Controls.Add(this.picDisplay);
             this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
-            this.MaximumSize = new System.Drawing.Size(720, 987);
-            this.MinimumSize = new System.Drawing.Size(713, 448);
+            this.MaximumSize = new System.Drawing.Size(718, 981);
+            this.MinimumSize = new System.Drawing.Size(711, 442);
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Form1";

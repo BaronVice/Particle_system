@@ -14,10 +14,10 @@ namespace Particle_system
         public HashSet<Particle> particles = new HashSet<Particle>();
         private List<Particle> toRemove = new List<Particle>();
 
-        public float gravitationX = 0;
-        public float gravitationY = 1;
+        public float gravitationX;
+        public float gravitationY;
 
-        public int amount = 500;
+        public int amount;
         public static Random random = new Random();
 
         public void DrawParticleList(Graphics g)
