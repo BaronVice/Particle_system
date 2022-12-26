@@ -52,6 +52,8 @@ namespace Particle_system
 
         private void CheckOverlaped(Graphics g)
         {
+            circles.Reverse();
+
             foreach (Particle particle in emitter.particles)
                 foreach (Circle circle in circles)
                 {
@@ -65,6 +67,9 @@ namespace Particle_system
                         particle.ObjColor = Particle.baseColor;
                     }
                 }
+
+            circles.Reverse();
+
         }
 
         private void Timer2_Tick(object sender, EventArgs e)
@@ -145,6 +150,9 @@ namespace Particle_system
             foreach (Circle circle in circles)
                 if (circle.Overlaps(mousePoint, Graphics.FromImage(picDisplay.Image)))
                 {
+                    circles.Remove(circle);
+                    circles.Add(circle);
+
                     draggedCircle = circle;
                     isDragged = !isDragged;
                     return;
@@ -152,6 +160,7 @@ namespace Particle_system
 
             isDragged = false;
         }
+
         private void picDisplayContextMenu_Opening(object sender, System.ComponentModel.CancelEventArgs e)
         {
             menuClickedX = mouseX;
