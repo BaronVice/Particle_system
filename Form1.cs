@@ -4,6 +4,13 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 
+// Created by BaronVice
+// GitHub: https://github.com/BaronVice
+
+// Open menu to add circle - rmb click
+// Pick circle to change - lmb click at circle
+// Pick circle to drag - double lmb click at circle
+
 namespace Particle_system
 {
     public partial class Form1 : Form
