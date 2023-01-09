@@ -9,6 +9,14 @@ using System.Windows.Forms;
 
 namespace Particle_system.MyObjects
 {
+    /** <summary>
+     * Класс <c>Particle</c> определяет частицу
+     * </summary>
+     * <value>
+     * <c> SpeedX, SpeedY </c> - векторы скоростей, <br/>
+     * <c> Life </c> - жизнь частицы. <br/>
+     * </value>
+     */
     class Particle : BaseObject
     {
         public float SpeedX;
@@ -44,9 +52,14 @@ namespace Particle_system.MyObjects
             ObjColor = baseColor;
         }
 
+        /** <summary> 
+        * Метод <c>Draw</c> отображает частицу на графике
+        * <paramref name="g"/>.
+        * </summary>
+        * <param name="g"> График, на котором будет нарисована частица </param>
+        */
         public void Draw(Graphics g)
         {
-            // Может в дальнейшем сделать начальный цвет частицы статическим?
             float k = Math.Min(1f, Life / 100);
             int alpha = (int)(k * 255);
 
@@ -58,6 +71,12 @@ namespace Particle_system.MyObjects
             brush.Dispose();
         }
 
+        /** <summary> 
+        * Метод <c>ResetValues</c> производит перерождение частицы
+        * <paramref name="display"/>.
+        * </summary>
+        * <param name="display"> График, на котором будет нарисована частица </param>
+        */
         public void ResetValues(PictureBox display)
         {
             Life = 20 + random.Next(100);
@@ -73,6 +92,13 @@ namespace Particle_system.MyObjects
 
         }
 
+        /** <summary> 
+        * Метод <c>MoveParticle</c> производит перемещение частицы в соответствии с гравитацией по
+        * <paramref name="gX"/> и <paramref name="gY"/>.
+        * </summary>
+        * <param name="gX"> Гравитация по оси X </param>
+        * <param name="gY"> Гравитация по оси Y </param>
+        */
         public void MoveParticle(float gX, float gY)
         {
             SpeedX += gX;

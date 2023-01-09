@@ -8,7 +8,16 @@ using System.Threading.Tasks;
 
 namespace Particle_system.MyObjects
 {
-    // TODO: закинуть сюда общие методы и поля
+    /** <summary> 
+     * Родительский класс <c>BaseObject</c> для выделения общих полей и методов фигур.
+     * </summary>
+     * <value>
+     * <c> ObjColor </c> - базовый цвет объекта, <br/>
+     * <c> Radius </c> - радиус объекта, <br/>
+     * <c> X и Y </c> - координаты объекта, <br/>
+     * <c> OnOverlap </c> - пересечение с текущим объектом.
+     * </value>
+     */
     class BaseObject
     {
         public Color ObjColor;
@@ -19,6 +28,10 @@ namespace Particle_system.MyObjects
 
         public Action<BaseObject, BaseObject> OnOverlap;
 
+        /** <summary> 
+        * Метод <c>GetTransform</c> определяет матрицу перехода.
+        * </summary>
+        */
         public Matrix GetTransform()
         {
             var matrix = new Matrix();
@@ -27,11 +40,25 @@ namespace Particle_system.MyObjects
             return matrix;
         }
 
+        /** <summary> 
+        * Метод <c>GetGraphicsPath</c> определяет нахождение объекта на рисунке.
+        * </summary>
+        */
         public virtual GraphicsPath GetGraphicsPath()
         {
             return new GraphicsPath();
         }
 
+        /** <summary> 
+        * Метод <c>Overlaps</c> определяет пересекается ли текущий объект
+        * с заданным объектом <paramref name="obj"/> на графике <paramref name="g"/>.
+        * </summary>
+        * <returns>
+        * true при пересечении объектов, иначе false
+        * </returns>
+        * <param name="obj"> Объект, с которым проверяется пересечение </param>
+        * <param name="g"> Рассматриваемый график </param>
+        */
         public virtual bool Overlaps(BaseObject obj, Graphics g)
         {
             var path1 = this.GetGraphicsPath();
@@ -46,6 +73,12 @@ namespace Particle_system.MyObjects
             return !region.IsEmpty(g);
         }
 
+        /** <summary> 
+        * Метод <c>Overlap</c> задает значение для делегаты OnOverlap, в случае если она еще
+        * не определена.
+        * </summary>
+        * <param name="obj"> Объект, с которым требуется задать пересечение </param>
+        */
         public virtual void Overlap(BaseObject obj)
         {
             if (this.OnOverlap != null)

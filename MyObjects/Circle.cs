@@ -8,10 +8,13 @@ using System.Threading.Tasks;
 
 namespace Particle_system.MyObjects
 {
-    // TODO: метод смены цвета объекта, если тот попал в область, у каждой области будет Color,
-    // сделать метод при нажатии на область появление контекстного меню с возможностью изменить радиус и цвет
-
-    // Будет прикольно сделать появление колец там, где было нажато контекстное меню PictureBox'a
+    /** <summary>
+     * Класс <c>Circle</c> определяет окружнсть, через которую проходят частицы
+     * </summary>
+     * <value>
+     * <c> Name </c> - название окружности.
+     * </value>
+     */
     class Circle : BaseObject
     {
         public String Name;
@@ -27,28 +30,58 @@ namespace Particle_system.MyObjects
             Radius = random.Next(30, 70);
         }
 
+        /** <summary> 
+        * Метод <c>DrawCircleList</c> запускает прорисовку всех окружностей из списка
+        * <paramref name="circles"/> на графике <paramref name="g"/>.
+        * </summary>
+        * <param name="g"> График, на котором будет происходить прорисовка </param>
+        * <param name="circles"> Список окружностей для прорисовки </param>
+        */
         public static void DrawCircleList(Graphics g, List<Circle> circles)
         {
             Render(g, circles);
         }
 
+        /** <summary> 
+        * Метод <c>DrawCircleList</c> рисует окружности из списка
+        * <paramref name="circles"/> на графике <paramref name="g"/>.
+        * </summary>
+        * <param name="g"> График, на котором будет происходить прорисовка </param>
+        * <param name="circles"> Список окружностей для прорисовки </param>
+        */
         private static void Render(Graphics g, List<Circle> circles)
         {
             foreach (Circle circle in circles)
                 circle.Draw(g);
         }
 
+        /** <summary> 
+        * Метод <c>GetRandomColor</c> задает случаный цвет окружности
+        * </summary>
+        */
         public static Color GetRandomColor()
         {
             return Color.FromArgb(random.Next(255), random.Next(255), random.Next(255));
         }
 
-        public static void ChangeColors(List<Circle> circles, Graphics g)
+        /** <summary> 
+        * Метод <c>ChangeColors</c> задает всем окружностям из списка
+        * <paramref name="circles"/> новые цвета.
+        * </summary>
+        * <param name="circles"> Список окружностей для смены цвета </param>
+        */
+        public static void ChangeColors(List<Circle> circles)
         {
             foreach (Circle circle in circles)
                 circle.ObjColor = GetRandomColor();
         }
 
+        /** <summary> 
+        * Метод <c>Draw</c> отображает окружность на графике
+        * <paramref name="g"/>.
+        * </summary>
+        * <param name="g"> График, на котором будет нарисована окружность </param>
+        */
         public void Draw(Graphics g)
         {
             Pen pen = new Pen(ObjColor, 10);
@@ -58,6 +91,13 @@ namespace Particle_system.MyObjects
             pen.Dispose();
         }
 
+        /** <summary> 
+        * Метод <c>DrawCircuit</c> рисует контуры окружности в соответствии с заданным радиусом
+        * <paramref name="rad"/>.
+        * </summary>
+        * <param name="g"> График, на котором будет нарисован контур </param>
+        * <param name="rad"> Радиус окружности контура </param>
+        */
         private void DrawCircuit(Graphics g, int rad)
         {
             g.DrawEllipse(circuit, X - rad, Y - rad, rad * 2, rad * 2);

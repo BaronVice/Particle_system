@@ -7,6 +7,10 @@ using System.Threading.Tasks;
 
 namespace Particle_system.MyObjects
 {
+    /** <summary>
+     * Класс <c>MousePoint</c> определяет положение курсора
+     * </summary>
+     */
     class MousePoint : BaseObject
     {
         public MousePoint()

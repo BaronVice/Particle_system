@@ -13,6 +13,20 @@ using System.Windows.Forms;
 
 namespace Particle_system
 {
+    /** <summary> 
+     * Класс <c>Form1</c> основная форма.
+     * </summary>
+     * <value>
+     * <c> emitter </c> - генератор частиц (<see cref="Emitter"/>), <br/>
+     * <c> circles </c> - окружности смены цвета частиц (<see cref="Circle"/>), <br/>
+     * <c> mouseX и mouseY </c> - положение курсора на рисунке <br/>
+     * <c> menuClickedX и menuClickedY </c> - определение положения курсора после клика <br/>
+     * <c> isDragged </c> - перемещает ли курсор окружность <br/>
+     * <c> draggedCircle </c> - окружность, которую перемещает курсор <br/>
+     * <c> counter </c> - количество окружностей на рисунке <br/>
+     * <c> chosenCircle </c> - выбранная окружность для редактирования.
+     * </value>
+     */
     public partial class Form1 : Form
     {
         Emitter emitter = new Emitter();
@@ -37,12 +51,11 @@ namespace Particle_system
             emitter.gravitationY = (float)gravY.Value;
         }
 
+        /// <summary>
+        /// Каждый тик обновляет состояния объектов на рисунке
+        /// </summary>
         private void Timer1_Tick(object sender, System.EventArgs e)
         {
-            // Позже (или не нужно)
-            //Circle.UpdateState(picDisplay);
-
-            // Может отдельным методом?
             Graphics g = Graphics.FromImage(picDisplay.Image);
 
             emitter.UpdateState(picDisplay);
@@ -57,6 +70,10 @@ namespace Particle_system
             g.Dispose();
         }
 
+        /// <summary>
+        /// Проверяет принадлежность частицы существующим окружностям.
+        /// Если принадлежит, то ее цвет меняется в цвет окружности, иначе возвращается в базовый.
+        /// </summary>
         private void CheckOverlaped(Graphics g)
         {
             circles.Reverse();
@@ -79,6 +96,12 @@ namespace Particle_system
 
         }
 
+        /// <summary>
+        /// Каждый тик вызывает метод добавления частиц в эмиттер
+        /// (<see cref="Emitter.AddParticles(PictureBox)"/>). Когда количество частиц эмиттера
+        /// <paramref name="emitter.amount"/> достигает указанного значения 
+        /// (<paramref name="emitter.particles.Count"/>), таймер останавливается.
+        /// </summary>
         private void Timer2_Tick(object sender, EventArgs e)
         {
             emitter.AddParticles(picDisplay);
@@ -87,22 +110,38 @@ namespace Particle_system
                 timer2.Stop();
         }
 
+        /// <summary>
+        /// При новом значении количества частиц обновляет значение в эмиттере
+        /// (<paramref name="emitter.amount"/>) и запускает проверку на добавление частиц. 
+        /// </summary>
         private void NumericUpDown1_ValueChanged(object sender, EventArgs e)
         {
             emitter.amount = (int)numericUpDown1.Value;
             timer2.Start();
         }
 
+        /// <summary>
+        /// Смена гравитации по оси X
+        /// </summary>
         private void gravX_ValueChanged(object sender, EventArgs e)
         {
             emitter.gravitationX = (float)gravX.Value;
         }
 
+        /// <summary>
+        /// Смена гравитации по оси Y
+        /// </summary>
         private void gravY_ValueChanged(object sender, EventArgs e)
         {
             emitter.gravitationY = (float)gravY.Value;
         }
 
+        /// <summary>
+        /// Создает кольцо в выбранном месте.
+        /// </summary>
+        /// <remarks>
+        /// Максимальное количество колец - 5. В случае переполнения самое старое кольцо удаляется.
+        /// </remarks>
         private void создатьЗдесьКольцоToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (circles.Count >= 5)
@@ -111,11 +150,19 @@ namespace Particle_system
             circles.Add(new Circle(menuClickedX, menuClickedY, $"Circle{counter++}"));
         }
 
+        /// <summary>
+        /// При нажатии на <c>button1</c> происходит вызов метода смены цвета колец
+        /// (<see cref="Circle.ChangeColors(List{Circle})"/>
+        /// </summary>
         private void button1_Click(object sender, EventArgs e)
         {
-            Circle.ChangeColors(circles, Graphics.FromImage(picDisplay.Image));
+            Circle.ChangeColors(circles);
         }
 
+        /// <summary>
+        /// При клике по области <c>picDisplay</c> если какая-либо окружность пересекается с местом клика, то
+        /// она будет отображена в окне свойств окружности.
+        /// </summary>
         private void picDisplay_Click(object sender, EventArgs e)
         {
             mousePoint.X = mouseX;
@@ -141,16 +188,26 @@ namespace Particle_system
                 }
         }
 
+        /// <summary>
+        /// Смена названия окружности.
+        /// </summary>
         private void circleName_TextChanged(object sender, EventArgs e)
         {
             chosenCircle.Name = circleName.Text;
         }
 
+        /// <summary>
+        /// Смена радиуса окружности.
+        /// </summary>
         private void circleRadius_ValueChanged(object sender, EventArgs e)
         {
             chosenCircle.Radius = (int)circleRadius.Value;
         }
 
+        /// <summary>
+        /// При двойном клике по области <c>picDisplay</c> если какая-либо окружность пересекается с местом
+        /// клика, то она будет взята для передвижения.
+        /// </summary>
         private void picDisplay_DoubleClick(object sender, EventArgs e)
         {
 
@@ -168,12 +225,19 @@ namespace Particle_system
             isDragged = false;
         }
 
+        /// <summary>
+        /// При открытии контекстного меню запоминается позиция курсора для создания окружности
+        /// (<see cref="создатьЗдесьКольцоToolStripMenuItem_Click"/>).
+        /// </summary>
         private void picDisplayContextMenu_Opening(object sender, System.ComponentModel.CancelEventArgs e)
         {
             menuClickedX = mouseX;
             menuClickedY = mouseY;
         }
 
+        /// <summary>
+        /// Отслеживание позиции курсора и передвижение окружности, если та взята.
+        /// </summary>
         private void picDisplay_MouseMove(object sender, MouseEventArgs e)
         {
             mouseX = e.X;
